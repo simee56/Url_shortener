@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,6 @@
     "express": "^4.21.2",
     "mongoose": "^8.9.5",
     "nanoid": "^5.0.9",
-    "nodemon": "^3.1.9"
+    "shortid": "^2.2.16"
   }
 }

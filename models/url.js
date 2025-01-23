@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
 
-const urlSchema = mongoose.schema(
+const urlSchema = new mongoose.Schema(
     {
-      shortId : {
-        type : String,
-        required : true,
-        unique : true,
-      },
+        shortId: {
+            type: String,
+            required: true,
+            unique: true,
+        },
 
-      redirectUrl : {
-        type : String,
-        required : true,
-      },
+        redirectURL: {
+            type: String,
+            required: true,
+        },
 
-      visitHistory : [{timestamp :{ type : Number}}]
+        visitHistory: [{ timestamp: { type: Number } }],
     },
 
-    {timestamp : true}
+    { timestamps: true }    //tells thr entry time
 );
 
-const URL = mongoose.schema('url', urlSchema);
+const URL = mongoose.model('url', urlSchema);
 
 module.exports = URL;
