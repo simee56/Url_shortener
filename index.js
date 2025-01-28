@@ -11,6 +11,8 @@ connectMongoDB("mongodb://127.0.0.1:27017/short-url").then(() =>
     console.log("MongoDb connected")
 );
 
+app.set("view engine", "ejs");
+
 app.use(express.json());
 app.use('/url', urlRoute);
 
