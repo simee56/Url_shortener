@@ -21,9 +21,27 @@ async function handleGenerateNewShortUrl(req, res) {
 
 async function handleGetAnalytics(req, res) {         //tells the number of clicks and visits
     const shortId = req.params.shortId;
+    const entry = await URL.findOneAndDelete({
+        shortId
+    },
+        {
+            $pop: {
+                visitHistory: {
+                    timestamp: Date.now()
+                }
+            }
+        }
+    )
+
+    if (!entry) {
+        return res.status(404).json({ error: "Short URL not found" });
+    }
+}
+
+async function handleDeleteAnalytics(req, res) {
+    const shortId = req.params.shortId;
     const result = await URL.findOne({ shortId });
     return res.json({
-        totalClicks: result.visitHistory.length,
         analytics: result.visitHistory
     })
 
@@ -31,5 +49,6 @@ async function handleGetAnalytics(req, res) {         //tells the number of clic
 
 module.exports = {
     handleGenerateNewShortUrl,
-    handleGetAnalytics
+    handleGetAnalytics,
+    handleDeleteAnalytics
 };
