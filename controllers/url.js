@@ -38,17 +38,8 @@ async function handleGetAnalytics(req, res) {         //tells the number of clic
     }
 }
 
-async function handleDeleteAnalytics(req, res) {
-    const shortId = req.params.shortId;
-    const result = await URL.findOne({ shortId });
-    return res.json({
-        analytics: result.visitHistory
-    })
-
-}
 
 module.exports = {
     handleGenerateNewShortUrl,
     handleGetAnalytics,
-    handleDeleteAnalytics
 };
