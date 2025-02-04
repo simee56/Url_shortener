@@ -13,7 +13,13 @@ const urlSchema = new mongoose.Schema(
             required: true,
         },
 
-        visitHistory: [{ timestamp: { type: Number } }],
+        visitHistory: [     //it is an array of objects 
+            {
+                timestamp: {
+                    type: Number
+                }
+            }
+        ],
     },
 
     { timestamps: true }    //tells thr entry time
