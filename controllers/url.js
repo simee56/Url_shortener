@@ -1,4 +1,5 @@
 const shortid = require('shortid');
+
 const URL = require('../models/url');
 
 async function handleGenerateNewShortUrl(req, res) {
@@ -14,32 +15,19 @@ async function handleGenerateNewShortUrl(req, res) {
         visitHistory: []
     });
 
-    return res.render("home",{
-        id:shortId
+    return res.render("home", {
+        id: shortId
     });
 }
 
-
 async function handleGetAnalytics(req, res) {         //tells the number of clicks and visits
     const shortId = req.params.shortId;
-    const entry = await URL.findOneAndDelete({
-        shortId
-    },
-        {
-            $pop: {
-                visitHistory: {
-                    timestamp: Date.now()
-                }
-            }
-        }
-    )
-
-    if (!entry) {
-        return res.status(404).json({ error: "Short URL not found" });
-    }
+    const result = await URL.findOne({ shortId });
+    return res.json({
+        totalClicks: result.visitHistory.length,
+        analytics: result.visitHistory,
+    });
 }
-
-
 module.exports = {
     handleGenerateNewShortUrl,
     handleGetAnalytics,
