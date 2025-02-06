@@ -23,7 +23,7 @@ app.set("views", path.resolve('./views'));
 
 //middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))   //this is for form data
 
 app.get('/test', async (req, res) => {
     const allUrls = await URL.find({});
@@ -33,8 +33,7 @@ app.get('/test', async (req, res) => {
 });
 
 app.use('/url', urlRoute);
-
-app.use('/', staticRoute);    // staric router = HTML ke rendering ke liye
+app.use('/', staticRoute);    // static router = frontend pages
 
 app.get("/:shortId", async (req, res) => {
     const shortId = req.params.shortId;
