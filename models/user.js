@@ -3,25 +3,25 @@ const mogoose = require('mongoose');
 const userSchema = new mogoose.Schema({
     name : {
         type: String,
-        require :true
+        required :true,
     },
     email : {
         type: String,
-        require :true,
+        required :true,
         unique :true
     },
     mobile :{
         type: Number,
-        require :true,
+        required :true,
         unique :true
     },
     password :{
         type: Number,
-        require :true
+        required :true,
     },
     gender : {
         type: Number,
-        require :true
+        required :true,
     },
 
 }, {timestamps :true})
