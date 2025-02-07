@@ -6,4 +6,4 @@ const { handleUserSignUp } = require('../controllers/user');
 
 router.post('/', handleUserSignUp);
 
-module.exports = router;
+module.exports = ro
