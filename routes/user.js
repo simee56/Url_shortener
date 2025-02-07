@@ -1,7 +1,9 @@
+//USer related code : like login /sign up
+
 const express = require('express');
-
 const router = express.Router();
+const { handleUserSignUp } = require('../controllers/user');
 
-module.exports = {
-    router
-}
+router.post('/', handleUserSignUp);
+
+module.exports = router;
