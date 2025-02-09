@@ -1,12 +1,8 @@
 const jwt = require('jsonwebtoken');
 const secretKey = "abpusa$6$+1";
 
-function setUser(id, user) {   //this function will create tokens 
-   const payLoad = {
-    id,
-    ...user,
-   }
-   return jwt.sign(payLoad,secretKey)
+function setUser( user) {   //this function will create tokens 
+   return jwt.sign(user,secretKey)
 };
 
 function getUser(id) {
