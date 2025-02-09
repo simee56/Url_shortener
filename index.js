@@ -10,7 +10,7 @@ const URL = require('./models/url');
 const cookieParser = require('cookie-parser');
 
 //Middleware
-const { restrictToLoggedInUserOnly } = require('./middleware/auth');
+const { restrictToLoggedInUserOnly, chechAuth } = require('./middleware/auth');
 
 //Routes
 const urlRoute = require('./routes/url');
@@ -32,8 +32,8 @@ app.set("views", path.resolve('./views'));
 
 //middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))    //this is for form data
-app.use(cookieParser)
+app.use(express.urlencoded({ extended: false }));    //this is for form data
+app.use(cookieParser());
 
 
 app.get('/test', async (req, res) => {
@@ -45,7 +45,7 @@ app.get('/test', async (req, res) => {
 
 
 app.use('/url', restrictToLoggedInUserOnly, urlRoute);
-app.use('/', staticRoute);    // static router = frontend pages
+app.use('/', chechAuth, staticRoute);                 // static router = frontend pages
 app.use('/user', userRoute);
 
 
