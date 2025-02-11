@@ -1,30 +1,33 @@
 const { getUser } = require('../services/auth');
 
-async function restrictToLoggedInUserOnly(req, res, next) {
-    const userUid = req.headers['Authorization'];
+function checkForAuthentication(req, res, next) {
 
-    if (!userUid) return res.redirect('/login');
-    const token = userUid.split('Bearer ')[1];    //at the first index there will be token
+    const authorizationHeaderValue = req.headers['authorization'];
+    req.user = null;
 
-    const user = getUser(token);              //verifies ijson web token
-
-    if (!user) return res.redirect('/login');   //if not verified
+    if (!authorizationHeaderValue || !authorizationHeaderValue.startsWith("Bearer")) {
+        return next();
+    }
+    const token = authorizationHeaderValue.split("Bearer ")[1];
+    const user = getUser(token);
 
     req.user = user;
-    next();
-
+    return next();
 }
 
-async function chechAuth(req, res, next) {
-    const userUid = req.headers['authorization'];
-    const token = userUid.split('Bearer ')[1];    //at the first index there will be token
+function restrictTo(roles = []) {
+    return function (req, res, next) {
+        if (!req.user) {
+            return res.redirect("/login");
+        }
+        if (!roles.includes(req, res, next)) {
+            return res.end("UnAuthorized");
+        }
 
-    const user = getUser(token);
-    req.user = user;
-    next();
+        return next();
+    }
 }
 
 module.exports = {
-    restrictToLoggedInUserOnly,
-    chechAuth
+    checkForAuthentication
 }
