@@ -21,7 +21,7 @@ const urlSchema = new mongoose.Schema(
             }
         ],
 
-        createdBy : {
+        createdBy : {    //this will show only those urls which are created by you(user)
             type : mongoose.Schema.Types.ObjectId,
             ref : 'users',
         },
