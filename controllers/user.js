@@ -1,5 +1,3 @@
-const { v4: uuidv4 } = require('uuid');
-
 const User = require('../models/user');
 const { setUser } = require('../services/auth');
 
@@ -12,7 +10,7 @@ async function handleUserSignUp(req, res) {
         mobile,
         gender
     });
-    return res.redirect("/");
+    return res.redirect('/');
 }
 
 async function handleUserLogIn(req, res) {
@@ -24,10 +22,14 @@ async function handleUserLogIn(req, res) {
         });
     }
 
-    const token = setUser({ userId: user._id, email: user.email });
-    // res.cookie('uid', token);     //cretae cookie
-
-    return res.json({token});
+    const token = setUser({ userId: user._id, email: user.email,  role: user.role  });
+    res.cookie('token', token, {     //create cookie
+        httpOnly: true,
+        secure: false,  // Set to true for production (HTTPS)
+        path: '/',      // Make sure the cookie is accessible to the entire site
+    });
+       
+    return res.redirect('/');
 }
 
 module.exports = {
