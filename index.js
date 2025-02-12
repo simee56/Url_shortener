@@ -45,7 +45,7 @@ app.get('/test', async (req, res) => {
 });
 
 
-app.use('/url', restrictTo(["NORMAL"]), urlRoute);
+app.use('/url', restrictTo(["NORMAL", "ADMIN"]), urlRoute);
 app.use('/', staticRoute);                 // static router = frontend pages
 app.use('/user', userRoute);
 
