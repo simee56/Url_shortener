@@ -3,8 +3,9 @@ const secretKey = "abpusa$6$+1";
 
 function setUser(user) {   //this function will create tokens 
     return jwt.sign({
-        _id: user.id,
-        email: user.email
+        _id: user._id,
+        email: user.email,
+        role : user.role,
     },
         secretKey);
 };
@@ -16,6 +17,7 @@ function getUser(token) {
         return jwt.verify(token, secretKey);
     } catch (err) {
         console.error("JWT verification failed:", err);
+     
         return null;
     }
 };
